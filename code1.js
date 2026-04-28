@@ -310,6 +310,14 @@ gdjs.MainCode.GDSkelet_9595EntryingObjects7= [];
 gdjs.MainCode.GDSkelet_9595EntryingObjects8= [];
 gdjs.MainCode.GDSkelet_9595EntryingObjects9= [];
 
+gdjs.MainCode.syncPixelHeartBar = function(runtimeScene) {
+gdjs.copyArray(runtimeScene.getObjects("PixelHeartBar"), gdjs.MainCode.GDPixelHeartBarObjects1);
+for (var i = 0, len = gdjs.MainCode.GDPixelHeartBarObjects1.length;i < len;++i) {
+    gdjs.evtsExt__TiledUnitsBar__TiledUnitsBar.TiledUnitsBar.prototype.SetMaxValue.call(gdjs.MainCode.GDPixelHeartBarObjects1[i], gdjs.evtTools.variable.getVariableNumber(runtimeScene.getScene().getVariables().get("BaseHealthMax")), {getBehaviorName: function(name) { return "ResourceBar"; }});
+    gdjs.evtsExt__TiledUnitsBar__TiledUnitsBar.TiledUnitsBar.prototype.SetValue.call(gdjs.MainCode.GDPixelHeartBarObjects1[i], gdjs.evtTools.variable.getVariableNumber(runtimeScene.getScene().getVariables().get("BaseHealth")), {getBehaviorName: function(name) { return "ResourceBar"; }});
+}
+};
+
 
 gdjs.MainCode.eventsList0 = function(runtimeScene) {
 
@@ -25566,7 +25574,7 @@ gdjs.MainCode.eventsList364 = function(runtimeScene) {
 
 let isConditionTrue_0 = false;
 isConditionTrue_0 = false;
-isConditionTrue_0 = gdjs.evtsExt__RepeatEveryXSeconds__Repeat.func(runtimeScene, "ZombieSpawner", 10, (typeof eventsFunctionContext !== 'undefined' ? eventsFunctionContext : undefined));
+isConditionTrue_0 = gdjs.evtsExt__RepeatEveryXSeconds__Repeat.func(runtimeScene, "ZombieSpawner", gdjs.evtTools.variable.getVariableNumber(runtimeScene.getScene().getVariables().get("ZombieSpawnInterval")), (typeof eventsFunctionContext !== 'undefined' ? eventsFunctionContext : undefined));
 if (isConditionTrue_0) {
 isConditionTrue_0 = false;
 {isConditionTrue_0 = runtimeScene.getOnceTriggers().triggerOnce(21232836);
@@ -25618,7 +25626,7 @@ isConditionTrue_0 = gdjs.evtTools.object.hitBoxesCollisionTest(gdjs.MainCode.map
 }
 if (isConditionTrue_0) {
 {for(var i = 0, len = gdjs.MainCode.GDSkeletObjects3.length ;i < len;++i) {
-    gdjs.MainCode.GDSkeletObjects3[i].addPolarForce(180, 20, 0);
+    gdjs.MainCode.GDSkeletObjects3[i].addPolarForce(180, gdjs.evtTools.variable.getVariableNumber(runtimeScene.getScene().getVariables().get("ZombieSpeed")), 0);
 }
 }}
 }
@@ -29096,8 +29104,16 @@ for (var i = 0, k = 0, l = gdjs.MainCode.GDSkeletObjects3.length;i<l;++i) {
 }
 gdjs.MainCode.GDSkeletObjects3.length = k;
 if (isConditionTrue_0) {
+{runtimeScene.getScene().getVariables().get("BaseHealth").sub(1);
+}{gdjs.MainCode.syncPixelHeartBar(runtimeScene);
+}{for(var i = 0, len = gdjs.MainCode.GDSkeletObjects3.length ;i < len;++i) {
+    gdjs.MainCode.GDSkeletObjects3[i].deleteFromScene(runtimeScene);
+}
+}{if (gdjs.evtTools.variable.getVariableNumber(runtimeScene.getScene().getVariables().get("BaseHealth")) <= 0) {
 {for(var i = 0, len = gdjs.MainCode.GDSceneTransitionsObjects3.length ;i < len;++i) {
     gdjs.MainCode.GDSceneTransitionsObjects3[i].setVariableBoolean(gdjs.MainCode.GDSceneTransitionsObjects3[i].getVariables().get("GameOver"), true);
+}
+}
 }
 }}
 }
@@ -29165,6 +29181,12 @@ gdjs.copyArray(runtimeScene.getObjects("Skelet"), gdjs.MainCode.GDSkeletObjects1
     gdjs.MainCode.GDGuardianCooldownObjects1[i].setHeight(0);
 }
 }{runtimeScene.getScene().getVariables().get("Money").setNumber(50);
+}{runtimeScene.getScene().getVariables().get("BaseHealthMax").setNumber(5);
+}{runtimeScene.getScene().getVariables().get("BaseHealth").setNumber(5);
+}{runtimeScene.getScene().getVariables().get("DifficultyLevel").setNumber(0);
+}{runtimeScene.getScene().getVariables().get("ZombieSpawnInterval").setNumber(10);
+}{runtimeScene.getScene().getVariables().get("ZombieSpeed").setNumber(20);
+}{runtimeScene.getScene().getVariables().get("FireSpawner").setNumber(6);
 }{for(var i = 0, len = gdjs.MainCode.GDBuildFireObjects1.length ;i < len;++i) {
     gdjs.MainCode.GDBuildFireObjects1[i].returnVariable(gdjs.MainCode.GDBuildFireObjects1[i].getVariables().get("Health")).setNumber(2);
 }
@@ -29181,6 +29203,24 @@ gdjs.copyArray(runtimeScene.getObjects("Skelet"), gdjs.MainCode.GDSkeletObjects1
     gdjs.MainCode.GDSceneTransitionsObjects1[i].getBehavior("FlashTransitionPainter").PaintEffect("0;0;0", 0.5, "Circular", "Backward", 0, (typeof eventsFunctionContext !== 'undefined' ? eventsFunctionContext : undefined));
 }
 }{gdjs.evtTools.sound.playSoundOnChannel(runtimeScene, "assets\\watching you.mp3", 10, true, 100, 1);
+}
+{gdjs.MainCode.syncPixelHeartBar(runtimeScene);
+}
+{
+let isConditionTrue_0 = false;
+isConditionTrue_0 = false;
+isConditionTrue_0 = gdjs.evtsExt__RepeatEveryXSeconds__Repeat.func(runtimeScene, "DifficultyRamp", 15, (typeof eventsFunctionContext !== 'undefined' ? eventsFunctionContext : undefined));
+if (isConditionTrue_0) {
+isConditionTrue_0 = false;
+{isConditionTrue_0 = runtimeScene.getOnceTriggers().triggerOnce(21390001);
+}
+}
+if (isConditionTrue_0) {
+{runtimeScene.getScene().getVariables().get("DifficultyLevel").add(1);
+}{runtimeScene.getScene().getVariables().get("DifficultyLevel").setNumber(Math.min(6, gdjs.evtTools.variable.getVariableNumber(runtimeScene.getScene().getVariables().get("DifficultyLevel"))));
+}{runtimeScene.getScene().getVariables().get("ZombieSpawnInterval").setNumber(Math.max(2, 10 - gdjs.evtTools.variable.getVariableNumber(runtimeScene.getScene().getVariables().get("DifficultyLevel"))));
+}{runtimeScene.getScene().getVariables().get("ZombieSpeed").setNumber(20 + gdjs.evtTools.variable.getVariableNumber(runtimeScene.getScene().getVariables().get("DifficultyLevel")) * 3);
+}
 }
 { //Subevents
 gdjs.MainCode.eventsList1(runtimeScene);} //End of subevents
@@ -29536,9 +29576,6 @@ gdjs.MainCode.GDMoney2Objects8.length = 0;
 gdjs.MainCode.GDMoney2Objects9.length = 0;
 gdjs.MainCode.GDSkeletObjects1.length = 0;
 gdjs.MainCode.GDSkeletObjects2.length = 0;
-gdjs.MainCode.GDSkeletObjects3.length = 0;
-gdjs.MainCode.GDSkeletObjects4.length = 0;
-gdjs.MainCode.GDSkeletObjects5.length = 0;
 gdjs.MainCode.GDSkeletObjects6.length = 0;
 gdjs.MainCode.GDSkeletObjects7.length = 0;
 gdjs.MainCode.GDSkeletObjects8.length = 0;

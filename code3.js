@@ -23,18 +23,18 @@ for (var i = 0, k = 0, l = gdjs.Game_32OverCode.GDRestartObjects1.length;i<l;++i
     if ( gdjs.Game_32OverCode.GDRestartObjects1[i].IsPressed((typeof eventsFunctionContext !== 'undefined' ? eventsFunctionContext : undefined)) ) {
         isConditionTrue_0 = true;
         gdjs.Game_32OverCode.GDRestartObjects1[k] = gdjs.Game_32OverCode.GDRestartObjects1[i];
-        ++k;
-    }
-}
-gdjs.Game_32OverCode.GDRestartObjects1.length = k;
-if (isConditionTrue_0) {
-{gdjs.evtTools.runtimeScene.replaceScene(runtimeScene, "Main", false);
-}{gdjs.evtTools.sound.playSoundOnChannel(runtimeScene, "assets\\watching you.mp3", 10, true, 100, 1);
-}}
+        {
 
-}
+        let isConditionTrue_0 = false;
+        isConditionTrue_0 = false;
+        isConditionTrue_0 = gdjs.evtTools.runtimeScene.sceneJustBegins(runtimeScene);
+        if (isConditionTrue_0) {
+        {gdjs.evtTools.sound.playSoundOnChannel(runtimeScene, "assets\\Music & Sound effects\\GameOver.wav", 1, false, 100, 1);
+        }}
 
+        }
 
+        };
 {
 
 gdjs.copyArray(runtimeScene.getObjects("Main_Menu"), gdjs.Game_32OverCode.GDMain_9595MenuObjects1);

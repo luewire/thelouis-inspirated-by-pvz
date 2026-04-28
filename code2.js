@@ -56,16 +56,7 @@ if (isConditionTrue_0) {
 
 
 {
-
-
-let isConditionTrue_0 = false;
-{
-{gdjs.evtTools.runtimeScene.replaceScene(runtimeScene, "Game Information/ ENG", false);
-}}
-
-}
-
-
+};
 };
 
 gdjs.Menu_32PauseCode.func = function(runtimeScene) {
